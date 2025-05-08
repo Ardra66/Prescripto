@@ -1,23 +1,13 @@
-
-
-// Assuming multer.js is in the 'middlewares' folder
-import upload from './multer.js';
-
+import multer from 'multer';
 import path from 'path';
-import fs from 'fs';
 
-// Create 'uploads' folder if not exists
-const uploadPath = 'uploads/';
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath);
-}
-
+// Setting up multer storage
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadPath); // <-- Here you tell where to save
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Save to uploads/ folder
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Save with timestamp
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Rename file
   }
 });
 
